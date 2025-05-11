@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Monthly Attendance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="teddy-icon">🐻</span> DSA Attendance
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <span class="close" onclick="toggleLogin()">&times;</span>
+            <h2>Login</h2>
+            <div class="login-form">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button onclick="handleLogin()">Login</button>
+                <p>Not registered? <a href="#" onclick="showSignup()">Sign Up</a></p>
+            </div>
+            <div class="signup-form" style="display: none;">
+                <input type="text" id="signupName" placeholder="Full Name" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <button onclick="handleSignup()">Sign Up</button>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="teddy-welcome">
+            <div class="teddy">
+                <div class="teddy-mouth"></div>
+            </div>
+            <div class="welcome-text">Digital Attendance System</div>
+            <div class="study-items">
+                <div class="book" style="top: 20px; left: 0;"></div>
+                <div class="pen" style="top: 100px; left: 0;"></div>
+                <div class="laptop" style="top: 150px; left: 0;"></div>
+                <div class="book" style="top: 50px; left: 300px; animation-delay: 1s;"></div>
+                <div class="pen" style="top: 120px; left: 400px; animation-delay: 2s;"></div>
+            </div>
+        </div>
+        <div class="music-control">
+            <button onclick="toggleMusic()">Toggle Music</button>
+            <button onclick="toggleDarkMode()">Toggle Theme</button>
+        </div>
+        <audio id="backgroundMusic" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <h1>DSA Monthly Attendance System</h1>
+        <div id="calendar" class="calendar"></div>
+        <div class="input-section">
+            <input type="text" id="nameInput" placeholder="Enter student name" required>
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <input type="month" id="monthInput" required>
+            <input type="password" id="adminPass" placeholder="Admin Password">
+            <button onclick="addStudent()">Add Student</button>
+        </div>
+        <div class="summary-section">
+            <h3>Attendance Summary</h3>
+            <canvas id="attendanceChart"></canvas>
+        </div>
+        <div class="admin-controls">
+            <h3>Pending Requests</h3>
+            <div id="pendingRequests"></div>
+            <h3>Top Performers</h3>
+            <div id="topStudents"></div>
+            <h3>Data Management</h3>
+            <button onclick="exportData()">Export Data</button>
+            <input type="file" id="importFile" accept=".csv" onchange="importData(event)" style="display: none;">
+            <label for="importFile" style="cursor: pointer; padding: 15px; background: var(--secondary); color: white; border-radius: 12px; display: inline-block;">Import Data</label>
+        </div>
+        <div class="attendance-table-wrapper">
+            <table class="attendance-table">
+                <thead id="tableHeader"></thead>
+                <tbody id="attendanceBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="notification" class="notification"></div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>DSA Attendance</h3>
+                <p>Empowering students to track their DSA learning journey.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@dsaattendance.com</p>
+                <p>Phone: +1-800-DSA-TRACK</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DSA Attendance System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script>
+        let attendanceData = [];
+        let calendarStatus = [];
+        let pendingChanges = [];
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const ADMIN_PASSWORD = "admin123";
+        let attendanceChart = null;
+
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.toggle('error', isError);
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function loadData() {
+            const storedData = localStorage.getItem('attendanceSystemData');
+            if (storedData) {
+                const data = JSON.parse(storedData);
+                attendanceData = data.attendanceData || [];
+                calendarStatus = data.calendarStatus || [];
+                pendingChanges = data.pendingChanges || [];
+                currentMonth = data.currentMonth !== undefined ? data.currentMonth : new Date().getMonth();
+                currentYear = data.currentYear || new Date().getFullYear();
+            }
+            document.getElementById('monthInput').value = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`;
+            generateHeader();
+            updateTable();
+            updatePendingRequests();
+            updateTopStudents();
+            updateAttendanceChart();
+        }
+
+        function saveData() {
+            const data = {
+                attendanceData,
+                calendarStatus,
+                pendingChanges,
+                currentMonth,
+                currentYear
+            };
+            localStorage.setItem('attendanceSystemData', JSON.stringify(data));
+        }
+
+        function exportData() {
+            const days = daysInMonth(currentMonth, currentYear);
+            let csvContent = 'Name,Email,' + Array.from({ length: days }, (_, i) => i + 1).join(',') + ',Attendance %\n';
+            
+            attendanceData.forEach(student => {
+                const attendanceRow = student.attendance.map((status, i) => {
+                    if (student.status[i] === 'pending') return `${status} (Pending)`;
+                    return status;
+                }).join(',');
+                const percentage = calculateAttendancePercentage(student);
+                csvContent += `${student.name},${student.email},${attendanceRow},${percentage}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `attendance_${currentYear}_${currentMonth + 1}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('Data exported successfully!');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csvData = e.target.result;
+                    const rows = csvData.split('\n').filter(row => row.trim() !== '');
+                    if (rows.length < 2) throw new Error('Empty or invalid CSV file');
+
+                    const headers = rows[0].split(',').map(h => h.trim());
+                    const days = daysInMonth(currentMonth, currentYear);
+                    if (headers.length !== days + 3 || headers[0] !== 'Name' || headers[1] !== 'Email') {
+                        throw new Error('Invalid CSV format. Expected: Name,Email,1,2,...,Attendance %');
+                    }
+
+                    attendanceData = [];
+                    calendarStatus = Array(days).fill('absent');
+                    pendingChanges = [];
+
+                    for (let i = 1; i < rows.length; i++) {
+                        const cols = rows[i].split(',').map(c => c.trim());
+                        if (cols.length < days + 3) continue;
+
+                        const name = cols[0];
+                        const email = cols[1];
+                        const attendance = cols.slice(2, days + 2).map(status => {
+                            if (status.includes('(Pending)')) return status.replace(' (Pending)', '');
+                            return status;
+                        });
+                        const markedBy = Array(days).fill('-');
+                        const timestamps = Array(days).fill('-');
+                        const status = Array(days).fill('approved');
+
+                        for (let j = 0; j < days; j++) {
+                            if (cols[j + 2].includes('(Pending)')) {
+                                status[j] = 'pending';
+                                pendingChanges.push({
+                                    studentIndex: i - 1,
+                                    dayIndex: j,
+                                    newStatus: attendance[j],
+                                    email: email,
+                                    timestamp: formatTimestamp()
+                                });
+                            } else if (!isSunday(currentYear, currentMonth, j + 1) && attendance[j] === 'Present') {
+                                calendarStatus[j] = 'present';
+                                markedBy[j] = email;
+                                timestamps[j] = formatTimestamp();
+                            } else if (isSunday(currentYear, currentMonth, j + 1)) {
+                                attendance[j] = 'Leave';
+                            }
+                        }
+
+                        attendanceData.push({
+                            name: name,
+                            email: email,
+                            attendance: attendance,
+                            markedBy: markedBy,
+                            timestamps: timestamps,
+                            status: status
+                        });
+                    }
+
+                    generateHeader();
+                    updateTable();
+                    updatePendingRequests();
+                    updateTopStudents();
+                    updateAttendanceChart();
+                    saveData();
+                    showNotification('Data imported successfully!');
+                } catch (err) {
+                    showNotification(`Error: ${err.message}`, true);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function daysInMonth(month, year) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+
+        function isSunday(year, month, day) {
+            return new Date(year, month, day).getDay() === 0;
+        }
+
+        function formatTimestamp() {
+            return new Date().toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        function calculateAttendancePercentage(student) {
+            const totalWorkingDays = student.attendance.filter(status => status !== 'Leave').length;
+            const presentDays = student.attendance.filter((status, index) => status === 'Present' && student.status[index] === 'approved').length;
+            return totalWorkingDays === 0 ? 0 : ((presentDays / totalWorkingDays) * 100).toFixed(2);
+        }
+
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            
+            dayNames.forEach((name, index) => {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day day-name';
+                dayDiv.textContent = name;
+                if (index === 0) dayDiv.classList.add('sunday');
+                calendar.appendChild(dayDiv);
+            });
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const days = daysInMonth(currentMonth, currentYear);
+            
+            if (calendarStatus.length !== days) {
+                calendarStatus = Array(days).fill('absent');
+                attendanceData.forEach(student => {
+                    student.attendance.forEach((status, i) => {
+                        if (!isSunday(currentYear, currentMonth, i + 1) && status === 'Present' && student.status[i] === 'approved') {
+                            calendarStatus[i] = 'present';
+                        } else if (student.status[i] === 'pending') {
+                            calendarStatus[i] = 'pending';
+                        }
+                    });
+                });
+            }
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'calendar-day';
+                calendar.appendChild(emptyDiv);
+            }
+
+            for (let i = 1; i <= days; i++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+                dayDiv.textContent = i;
+                
+                const statusDot = document.createElement('div');
+                statusDot.className = 'status-dot';
+                dayDiv.appendChild(statusDot);
+
+                if (isSunday(currentYear, currentMonth, i)) {
+                    dayDiv.classList.add('sunday');
+                } else {
+                    dayDiv.onclick = () => toggleCalendarAttendance(i - 1);
+                }
+                calendar.appendChild(dayDiv);
+            }
+            updateCalendarStatus();
+        }
+
+        function generateHeader() {
+            const monthInput = document.getElementById('monthInput').value;
+            if (monthInput) {
+                [currentYear, currentMonth] = monthInput.split('-');
+                currentMonth = parseInt(currentMonth) - 1;
+            }
+            
+            const days = daysInMonth(currentMonth, currentYear);
+            const thead = document.getElementById('tableHeader');
+            let headerHTML = '<tr><th>Name</th>';
+            
+            for (let i = 1; i <= days; i++) {
+                const isSun = isSunday(currentYear, currentMonth, i);
+                headerHTML += `<th ${isSun ? 'class="leave"' : ''}>${i}</th>`;
+            }
+            headerHTML += '<th>Total Present</th><th>Attendance %</th></tr>';
+            thead.innerHTML = headerHTML;
+            generateCalendar();
+            saveData();
+        }
+
+        function addStudent() {
+            const name = document.getElementById('nameInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            const monthInput = document.getElementById('monthInput').value;
+
+            if (!monthInput) {
+                showNotification('Please select a month first!', true);
+                return;
+            }
+            
+            if (name && email && validateEmail(email)) {
+                if (!attendanceData.some(student => student.name.toLowerCase() === name.toLowerCase())) {
+                    const days = daysInMonth(currentMonth, currentYear);
+                    const attendance = Array(days).fill('Absent');
+                    const markedBy = Array(days).fill('-');
+                    const timestamps = Array(days).fill('-');
+                    const status = Array(days).fill('approved');
+                    
+                    for (let i = 0; i < days; i++) {
+                        if (isSunday(currentYear, currentMonth, i + 1)) {
+                            attendance[i] = 'Leave';
+                        } else if (calendarStatus[i] === 'present') {
+                            attendance[i] = 'Present';
+                            markedBy[i] = email;
+                            timestamps[i] = formatTimestamp();
+                        }
+                    }
+                    
+                    attendanceData.push({
+                        name: name,
+                        email: email,
+                        attendance: attendance,
+                        markedBy: markedBy,
+                        timestamps: timestamps,
+                        status: status
+                    });
+                    updateTable();
+                    updateTopStudents();
+                    updateAttendanceChart();
+                    saveData();
+                    document.getElementById('nameInput').value = '';
+                    document.getElementById('emailInput').value = '';
+                    showNotification('Student added successfully!');
+                } else {
+                    showNotification('Student already exists!', true);
+                }
+            } else {
+                showNotification('Please enter a valid name and email!', true);
+            }
+        }
+
+        function toggleCalendarAttendance(dayIndex) {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email || !validateEmail(email)) {
+                showNotification('Please enter a valid email first!', true);
+                return;
+            }
+
+            if (isSunday(currentYear, currentMonth, dayIndex + 1)) return;
+
+            const newStatus = calendarStatus[dayIndex] === 'present' ? 'absent' : 'present';
+            const timestamp = formatTimestamp();
+            
+            attendanceData.forEach(student => {
+                pendingChanges.push({
+                    studentIndex: attendanceData.indexOf(student),
+                    dayIndex: dayIndex,
+                    newStatus: newStatus,
+                    email: email,
+                    timestamp: timestamp
+                });
+                student.status[dayIndex] = 'pending';
+            });
+            
+            calendarStatus[dayIndex] = 'pending';
+            updateCalendarStatus();
+            updateTable();
+            updatePendingRequests();
+            updateTopStudents();
+            updateAttendanceChart();
+            saveData();
+            showNotification('Attendance change requested!');
+        }
+
+        function toggleAttendance(studentIndex, dayIndex) {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email || !validateEmail(email)) {
+                showNotification('Please enter a valid email first!', true);
+                return;
+            }
+
+            if (isSunday(currentYear, currentMonth, dayIndex + 1)) return;
+
+            const student = attendanceData[studentIndex];
+            const newStatus = student.attendance[dayIndex] === 'Present' ? 'Absent' : 'Present';
+            
+            pendingChanges.push({
+                studentIndex: studentIndex,
+                dayIndex: dayIndex,
+                newStatus: newStatus,
+                email: email,
+                timestamp: formatTimestamp()
+            });
+            
+            student.status[dayIndex] = 'pending';
+            updateTable();
+            updatePendingRequests();
+            updateTopStudents();
+            updateAttendanceChart();
+            saveData();
+            showNotification('Attendance change requested!');
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function updateCalendarStatus() {
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.day-name)');
+            calendarDays.forEach((day, index) => {
+                if (index >= calendarStatus.length) return;
+                if (!day.classList.contains('sunday')) {
+                    day.classList.remove('present', 'absent', 'pending');
+                    day.classList.add(calendarStatus[index]);
+                }
+            });
+        }
+
+        function updateTable() {
+            const tbody = document.getElementById('attendanceBody');
+            tbody.innerHTML = '';
+
+            const sortedData = [...attendanceData].sort((a, b) => 
+                calculateAttendancePercentage(b) - calculateAttendancePercentage(a)
+            );
+
+            sortedData.forEach((student, studentIndex) => {
+                const row = document.createElement('tr');
+                let rowHTML = `<td>${student.name}</td>`;
+                
+                let presentCount = 0;
+                student.attendance.forEach((status, dayIndex) => {
+                    const isSun = isSunday(currentYear, currentMonth, dayIndex + 1);
+                    let className = isSun ? 'leave' : 
+                        student.status[dayIndex] === 'pending' ? 'pending' : 
+                        status === 'Present' ? 'present' : 'absent';
+                    
+                    if (status === 'Present' && student.status[dayIndex] === 'approved') presentCount++;
+                    
+                    const tooltipText = student.status[dayIndex] === 'pending' ?
+                        `Pending Change\nRequested by: ${student.markedBy[dayIndex]}\nTime: ${student.timestamps[dayIndex]}` :
+                        `Marked by: ${student.markedBy[dayIndex]}\nTime: ${student.timestamps[dayIndex]}`;
+                    
+                    rowHTML += `
+                        <td class="${className}" 
+                            ${!isSun ? `onclick="toggleAttendance(${attendanceData.indexOf(student)}, ${dayIndex})"` : ''}>
+                            ${status.charAt(0)}
+                            <span class="tooltip">${tooltipText}</span>
+                        </td>`;
+                });
+                
+                const percentage = calculateAttendancePercentage(student);
+                rowHTML += `<td class="total-cell">${presentCount}</td>`;
+                rowHTML += `<td class="total-cell">${percentage}%</td>`;
+                row.innerHTML = rowHTML;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updatePendingRequests() {
+            const pendingDiv = document.getElementById('pendingRequests');
+            pendingDiv.innerHTML = '';
+            
+            pendingChanges.forEach((change, index) => {
+                const requestDiv = document.createElement('div');
+                requestDiv.innerHTML = `
+                    <p>${attendanceData[change.studentIndex].name} - Day ${change.dayIndex + 1}: 
+                    ${change.newStatus} 
+                    (Requested by: ${change.email} at ${change.timestamp}) 
+                    <button onclick="approveChange(${index})">Approve</button>
+                    <button onclick="rejectChange(${index})">Reject</button></p>
+                `;
+                pendingDiv.appendChild(requestDiv);
+            });
+        }
+
+        function updateTopStudents() {
+            const topDiv = document.getElementById('topStudents');
+            topDiv.innerHTML = '';
+            
+            const sortedStudents = [...attendanceData]
+                .sort((a, b) => calculateAttendancePercentage(b) - calculateAttendancePercentage(a))
+                .slice(0, 3);
+            
+            sortedStudents.forEach((student, index) => {
+                const studentDiv = document.createElement('div');
+                studentDiv.innerHTML = `
+                    <p>${index + 1}. ${student.name} - ${calculateAttendancePercentage(student)}%</p>
+                `;
+                topDiv.appendChild(studentDiv);
+            });
+        }
+
+        function updateAttendanceChart() {
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            const days = daysInMonth(currentMonth, currentYear);
+            const presentCounts = Array(days).fill(0);
+            
+            attendanceData.forEach(student => {
+                student.attendance.forEach((status, i) => {
+                    if (status === 'Present' && student.status[i] === 'approved') {
+                        presentCounts[i]++;
+                    }
+                });
+            });
+
+            if (attendanceChart) {
+                attendanceChart.destroy();
+            }
+
+            attendanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Array.from({ length: days }, (_, i) => i + 1),
+                    datasets: [{
+                        label: 'Present Students',
+                        data: presentCounts,
+                        backgroundColor: 'rgba(0, 200, 83, 0.6)',
+                        borderColor: 'rgba(0, 200, 83, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Students'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Day of Month'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function approveChange(index) {
+            const adminPass = document.getElementById('adminPass').value;
+            if (adminPass !== ADMIN_PASSWORD) {
+                showNotification('Incorrect admin password!', true);
+                return;
+            }
+
+            const change = pendingChanges[index];
+            const student = attendanceData[change.studentIndex];
+            
+            student.attendance[change.dayIndex] = change.newStatus;
+            student.markedBy[change.dayIndex] = change.email;
+            student.timestamps[change.dayIndex] = change.timestamp;
+            student.status[change.dayIndex] = 'approved';
+            
+            const allApproved = attendanceData.every(s => 
+                s.attendance[change.dayIndex] === change.newStatus || 
+                s.status[change.dayIndex] === 'pending');
+            calendarStatus[change.dayIndex] = allApproved ? change.newStatus.toLowerCase() : 'pending';
+            
+            pendingChanges.splice(index, 1);
+            updateCalendarStatus();
+            updateTable();
+            updatePendingRequests();
+            updateTopStudents();
+            updateAttendanceChart();
+            saveData();
+            showNotification('Change approved!');
+        }
+
+        function rejectChange(index) {
+            const adminPass = document.getElementById('adminPass').value;
+            if (adminPass !== ADMIN_PASSWORD) {
+                showNotification('Incorrect admin password!', true);
+                return;
+            }
+
+            const change = pendingChanges[index];
+            const student = attendanceData[change.studentIndex];
+            student.status[change.dayIndex] = 'approved';
+            
+            const allApproved = attendanceData.every(s => 
+                s.status[change.dayIndex] === 'approved' || 
+                s.attendance[change.dayIndex] === student.attendance[change.dayIndex]);
+            calendarStatus[change.dayIndex] = allApproved ? student.attendance[change.dayIndex].toLowerCase() : 'pending';
+            
+            pendingChanges.splice(index, 1);
+            updateCalendarStatus();
+            updateTable();
+            updatePendingRequests();
+            updateTopStudents();
+            updateAttendanceChart();
+            saveData();
+            showNotification('Change rejected!');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.body.style.background = isDark ? 
+                'linear-gradient(135deg, #2c3e50, #4b0082)' : 
+                'linear-gradient(135deg, #80deea, #b388ff)';
+            document.querySelector('.container').style.background = isDark ? 
+                'rgba(44, 62, 80, 0.95)' : 
+                'rgba(255, 255, 255, 0.95)';
+            showNotification(`Switched to ${isDark ? 'Dark' : 'Light'} Mode`);
+        }
+
+        document.getElementById('monthInput').addEventListener('change', () => {
+            const oldMonth = currentMonth;
+            const oldYear = currentYear;
+            [currentYear, currentMonth] = document.getElementById('monthInput').value.split('-');
+            currentMonth = parseInt(currentMonth) - 1;
+            if (oldMonth !== currentMonth || oldYear !== currentYear) {
+                attendanceData = [];
+                calendarStatus = [];
+                pendingChanges = [];
+            }
+            generateHeader();
+            updateTable();
+            updateTopStudents();
+            updateAttendanceChart();
+            saveData();
+        });
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addStudent();
+            }
+        });
+
+        const audio = document.getElementById('backgroundMusic');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+            isPlaying = !isPlaying;
+            showNotification(`Music ${isPlaying ? 'Playing' : 'Paused'}`);
+        }
+
+        window.onload = function() {
+            loadData();
+            audio.play().catch(() => {
+                console.log("Auto-play was blocked by the browser. Use the toggle button to play music.");
+            });
+            isPlaying = true;
+            checkLoginStatus();
+        };
+    </script>
+</body>
+</html>

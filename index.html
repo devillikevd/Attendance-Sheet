@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Attendance System - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="teddy-icon">🐻</span> DSA Attendance
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <span class="close" onclick="toggleLogin()">&times;</span>
+            <h2>Login</h2>
+            <div class="login-form">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button onclick="handleLogin()">Login</button>
+                <p>Not registered? <a href="#" onclick="showSignup()">Sign Up</a></p>
+            </div>
+            <div class="signup-form" style="display: none;">
+                <input type="text" id="signupName" placeholder="Full Name" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <button onclick="handleSignup()">Sign Up</button>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to DSA Attendance System</h1>
+            <p>Track your Data Structures and Algorithms learning progress with ease and efficiency.</p>
+            <a href="dashboard.html" class="cta-button">Get Started</a>
+        </div>
+        <div class="teddy-welcome">
+            <div class="teddy">
+                <div class="teddy-mouth"></div>
+            </div>
+            <div class="welcome-text">Track Your Progress!</div>
+            <div class="study-items">
+                <div class="book" style="top: 20px; left: 0;"></div>
+                <div class="pen" style="top: 100px; left: 0;"></div>
+                <div class="laptop" style="top: 150px; left: 0;"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>DSA Attendance</h3>
+                <p>Empowering students to track their DSA learning journey.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: dubeyvyom26@gmail.com</p>
+                <p>Phone: +917668863787</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/_vyom_dubey/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DSA Attendance System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
