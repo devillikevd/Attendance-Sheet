@@ -976,3 +976,9 @@ td:hover .tooltip {
         padding: 0 20px;
     }
 }
+
+/* Badges inside .features already styled. Customize icons if needed */
+#badge1 i { color: var(--warning); }
+#badge2 i { color: var(--accent); }
+#badge3 i { color: var(--success); }
+
