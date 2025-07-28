@@ -1,57 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About - DSA Attendance Sheet</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 0;
-    }
-
-    .about-section {
-      max-width: 800px;
-      margin: 50px auto;
-      background-color: #fff;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .about-section h2 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .about-section p {
-      color: #555;
-      line-height: 1.6;
-    }
-
-    .highlight {
-      color: #007acc;
-      font-weight: bold;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - DSA Attendance System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div class="about-section">
-    <h2>About the DSA Attendance Sheet</h2>
-    <p>
-      The <span class="highlight">DSA Attendance Sheet</span> is a web-based tool designed to help track and manage student attendance during Data Structures and Algorithms sessions. It provides a simple and intuitive interface for instructors and students alike, enabling easy logging, viewing, and exporting of attendance records.
-    </p>
-    <p>
-      Whether you're managing a coding bootcamp, university class, or peer learning group, this sheet helps ensure accountability and consistent participation in your DSA learning journey.
-    </p>
-    <p>
-      Built using <span class="highlight">HTML</span>, <span class="highlight">CSS</span>, and optionally JavaScript, it can be integrated into broader classroom tools or used as a standalone solution.
-    </p>
+  <nav class="navbar">
+    <div class="logo">
+      <span class="teddy-icon">🐻</span> DSA Attendance
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
+    </ul>
+    <div class="hamburger"><i class="fas fa-bars"></i></div>
+  </nav>
+
+  <div class="login-modal" id="loginModal">
+    <div class="login-content">
+      <span class="close" onclick="toggleLogin()">&times;</span>
+      <h2>Login</h2>
+      <div class="login-form">
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button>Login</button>
+        <p>Not registered? <a href="#">Sign Up</a></p>
+      </div>
+    </div>
   </div>
 
+  <section class="container about">
+    <h1>About DSA Attendance System</h1>
+    <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">
+      The DSA Attendance System is an innovative platform designed to help students and educators track and monitor progress in Data Structures and Algorithms with ease. We aim to make learning interactive, measurable, and fun.
+    </p>
+
+    <div class="features">
+      <div class="feature-card">
+        <i class="fas fa-check-circle"></i>
+        <h3>Attendance Tracking</h3>
+        <p>Mark your daily learning activities and track your DSA consistency visually.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Progress Analytics</h3>
+        <p>Get detailed analytics and insights on your weekly/monthly performance.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-user-shield"></i>
+        <h3>Student Dashboard</h3>
+        <p>Personalized dashboard to manage your topics, progress, and goals.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-trophy"></i>
+        <h3>Top Performers</h3>
+        <p>Leaderboards that celebrate consistency and dedication.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>DSA Attendance</h3>
+        <p>Empowering students to track their DSA learning journey.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: dubeyvyom26@gmail.com</p>
+        <p>Phone: +917668863787</p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/_vyom_dubey/"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 DSA Attendance System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-sss
