@@ -7,22 +7,93 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Toggle Button */
+    .dark-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: inherit;
+      margin-left: 20px;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .navbar {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .nav-links a {
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .nav-links a.active {
+      color: #90caf9;
+    }
+
+    body.dark-mode .login-modal {
+      background-color: rgba(30, 30, 30, 0.95);
+    }
+
+    body.dark-mode .login-content {
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+
+    body.dark-mode .login-form input {
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #666;
+    }
+
+    body.dark-mode .login-form button {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    body.dark-mode .feature-card {
+      background-color: #2c2c2c;
+      color: #eee;
+      border: 1px solid #444;
+    }
+
+    body.dark-mode footer {
+      background-color: #1a1a1a;
+      color: #ccc;
+    }
+
+    body.dark-mode .footer-section a {
+      color: #90caf9;
+    }
+
+    body.dark-mode .footer-bottom {
+      border-top: 1px solid #444;
+    }
+  </style>
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="logo">
-      <span class="teddy-icon">🐻</span> DSA Attendance
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
-    </ul>
-    <div class="hamburger"><i class="fas fa-bars"></i></div>
-  </nav>
+  <div class="logo">
+    <span class="teddy-icon">🐻</span> DSA Attendance
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
+  </ul>
+  <button id="darkModeToggle" class="dark-toggle">🌙</button>
+  <div class="hamburger"><i class="fas fa-bars"></i></div>
+</nav>
+
 
   <div class="login-modal" id="loginModal">
     <div class="login-content">
@@ -102,6 +173,14 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js">
+    document.getElementById("darkModeToggle").addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
+
+  // Toggle the icon
+  this.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+});
+
+  </script>
 </body>
 </html>

@@ -20,6 +20,10 @@
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
         </ul>
+        <button id="darkModeToggle" class="dark-toggle">
+  🌙
+</button>
+
         <div class="hamburger">
             <i class="fas fa-bars"></i>
         </div>
@@ -98,6 +102,14 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js">
+        document.getElementById("darkModeToggle").addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
+
+  // Toggle the icon
+  this.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+});
+
+    </script>
 </body>
 </html>
