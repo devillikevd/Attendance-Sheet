@@ -93,12 +93,12 @@ Push to the branch: git push origin feature-name
 
 Open a Pull Request 🚀
 
-## 🧑‍🚀 Contributors
-Name	Role
-Vyom Dubey	Project Lead
-Shaili Dixit	GSSOC Contributor
+## 👥 Contributors
 
-Add your name after your first successful PR!
+Thanks to all the amazing contributors! 💖
+
+![Contributors](https://contrib.rocks/image?repo=devillikevd/Attendance-Sheet)
+
 
 ## 📬 Contact
 📧 Email: dubeyvyom26@gmail.com
