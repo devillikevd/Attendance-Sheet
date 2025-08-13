@@ -1,0 +1,32 @@
+.nav-links{
+    margin: 0;
+    display: flex;
+    gap: 60px;
+}
+.container{
+padding-top:70px ;
+}
+.music-control{
+    margin-right: 30px;
+}
+.admin-controls{
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+.admin-controls button{
+height: 50px;  
+width: 14%;  
+}
+.admin-controls label{
+height: 50px;
+
+}
+.input-section{
+   display: flex;
+   justify-content: space-around;
+   width: 100%;
+}
+.input-section input{
+    width: 20%;
+}
