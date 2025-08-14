@@ -14,6 +14,7 @@
     
 </head>
 <body>
+    <!-- Navigation bar Starts Here -->
     <nav class="navbar">
         <div class="logo">
             <span class="teddy-icon">🐻</span> DSA Attendance
@@ -21,7 +22,7 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
             <li><a href="dashboard.html" class="active">Dashboard</a></li>
             <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
         </ul>
@@ -89,6 +90,7 @@
             <h3>Attendance Summary</h3>
             <canvas id="attendanceChart"></canvas>
         </div>
+        <!--pending Requests Section-->
         <div class="admin-controls">
             <h3>Pending Requests</h3>
             <div id="pendingRequests"></div>
@@ -107,9 +109,10 @@
         </div>
     </div>
 
-     <section class="container">
-  <h1>Your Achievements</h1>
-  <div class="features">
+<!--Achievements Section-->
+<section class="container">
+   <h1>Your Achievements</h1>
+    <div class="features">
     <div class="feature-card" id="badge1">
       <i class="fas fa-fire"></i>
       <h3>7-Day Streak</h3>
@@ -127,15 +130,13 @@
     </div>
   </div>
 </section>
+
 <section class="container">
   <h1>Weekly Progress</h1>
   <canvas id="progressChart" height="100"></canvas>
 </section>
-
-
-    
     <div id="notification" class="notification"></div>
-
+<!--Footer Section Starts Here-->
     <footer>
         <div class="footer-content">
             <div class="footer-section">

@@ -276,7 +276,7 @@ h1 {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 60px;
 }
 
 .nav-links li a {
