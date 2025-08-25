@@ -3,9 +3,26 @@
 A smart and interactive attendance system designed to help students consistently practice **Data Structures and Algorithms (DSA)**. This web-based application allows users to track their daily topic progress, visualize performance through charts, and earn gamified badges for consistency and milestones.
 
 ---
+## Table OF Content
+
+🐻 DSA Attendance System
+🚀 Features
+📷 Screenshots
+🧑‍💻 Tech Stack
+📁 Project Structure
+📈 Gamification System
+💡 Future Enhancements
+🏁 How to Run
+🤝 Contributing
+🧑‍🚀 Contributors
+📬 Contact
+📜 License
+
+
 ## 🌐 Live Demo
 
 🔗 [Click here to view the deployed project](https://dsaattendance-sheet-seven.vercel.app/)
+
 ---
 
 ## 🚀 Features
@@ -22,10 +39,17 @@ A smart and interactive attendance system designed to help students consistently
 
 ## 📷 Screenshots
 
-| Dashboard with Badges | Weekly Progress Chart |
-|------------------------|-----------------------|
-| ![Badges Screenshot](assets/images/badges-preview.png) | ![Chart Screenshot](assets/images/chart-preview.png) |
+1. Home Page Page
+![Home Page](screenshots/Home.png)
 
+2. About Page
+![About Page](screenshots/about.png)
+
+3. Contact Page
+![Contact Page](screenshots/Contact.png)
+
+4. Dashboard Page
+![Dashboard Page](screenshots/dashboard.png)
 ---
 
 ## 🧑‍💻 Tech Stack
