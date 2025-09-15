@@ -1057,3 +1057,26 @@ body.dark-mode .footer-section a {
 body.dark-mode .footer-bottom {
   border-top: 1px solid #444;
 }
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* hide menu on small screens */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .nav-links.active {
+        display: flex; /* show menu when active */
+    }
+
+    .hamburger {
+        display: block; /* show hamburger icon */
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+}
