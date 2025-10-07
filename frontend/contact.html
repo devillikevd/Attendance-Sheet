@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Attendance System - Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   <nav class="navbar">
+    <div class="logo">
+        <span class="teddy-icon">🐻</span> DSA Attendance
+    </div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact Us</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="#" id="loginLink" onclick="toggleLogin()">Login</a></li>
+    </ul>
+    <div class="hamburger"><i class="fas fa-bars"></i></div>
+</nav>
+
+<section class="contact">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Have questions or feedback? Reach out to us!</p>
+        <div class="contact-form">
+            <input type="text" id="contactName" placeholder="Your Name" required>
+            <input type="email" id="contactEmail" placeholder="Your Email" required>
+            <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+            <button type="button" onclick="submitContact()">Send Message</button>
+        </div>
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> 
+               <a href="mailto:dubeyvyom26@gmail.com">dubeyvyom26@gmail.com</a>
+            </p>
+            <p><i class="fas fa-phone"></i> 
+               <a href="tel:+917668863787">+91 7668863787</a>
+            </p>
+            <p><i class="fas fa-map-marker-alt"></i> 
+               <a href="https://www.google.com/maps/search/?api=1&query=Uttar+Pradesh" target="_blank">Uttar Pradesh</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>DSA Attendance</h3>
+            <p>Empowering students to track their DSA learning journey.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: <a href="mailto:dubeyvyom26@gmail.com">dubeyvyom26@gmail.com</a></p>
+            <p>Phone: <a href="tel:+917668863787">+91 7668863787</a></p>
+        </div>
+        <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/_vyom_dubey/"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 DSA Attendance System. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+async function submitContact() {
+    const name = document.getElementById("contactName").value.trim();
+    const email = document.getElementById("contactEmail").value.trim();
+    const message = document.getElementById("contactMessage").value.trim();
+
+    if (!name || !email || !message) {
+        alert("⚠️ Please fill out all fields.");
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:5000/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert("✅ Message sent successfully!");
+            document.getElementById("contactName").value = "";
+            document.getElementById("contactEmail").value = "";
+            document.getElementById("contactMessage").value = "";
+        } else {
+            alert("❌ " + data.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert("❌ Failed to send. Try again later.");
+    }
+}
+</script>
+
+</body>
+</html>
+
+
+
