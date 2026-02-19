@@ -131,7 +131,7 @@ Thanks to all the amazing contributors! 💖
 ## 📬 Contact
 📧 Email: dubeyvyom26@gmail.com
 
-📷 Instagram: @_vyom_dubey
+📷 Instagram: _vyom_dubey_18
 
 💬 Open an issue for questions or feature requests
 
